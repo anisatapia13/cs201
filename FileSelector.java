@@ -14,6 +14,10 @@ import javax.swing.filechooser.FileFilter;
  * 
  *         This software is licensed with an Apache 2 license, see
  *         http://www.apache.org/licenses/LICENSE-2.0 for details.
+ *
+ * @author ola
+ * Modified Fall 2020 to add support for dialog messages
+ * and default filenames in Huffman assignment
  */
 class FileSelector {
     // result of selection
@@ -25,7 +29,6 @@ class FileSelector {
         ourChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
     }
 
-
     /**
      * Pops up a dialog box to select only one file.
      * 
@@ -33,6 +36,11 @@ class FileSelector {
      */
     public static File selectFile () {
         // guaranteed to have one element, though it may be null
+        return selectFiles(null, false, true)[0];
+    }
+    public static File selectFile (String title) {
+        // guaranteed to have one element, though it may be null
+        ourChooser.setDialogTitle(title);
         return selectFiles(null, false, true)[0];
     }
 
@@ -66,6 +74,12 @@ class FileSelector {
      */
     public static File saveFile () {
         // guaranteed to have one element, though it may be null
+        return selectFiles(null, false, false)[0];
+    }
+    public static File saveFile (String title,String defaultName) {
+        // guaranteed to have one element, though it may be null
+        ourChooser.setSelectedFile(new File(defaultName));
+        ourChooser.setDialogTitle(title);
         return selectFiles(null, false, false)[0];
     }
 
